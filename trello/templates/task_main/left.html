@@ -1,0 +1,7 @@
+<div class="col-1 ml-0 mr-1 px-0">
+    <form action="{% url 'main:update_status' task.pk %}" method="post" class="status_change">
+        {% csrf_token %}
+        <input type="hidden" name="status" value={{ status.pk|add:-1 }}>
+        <button type="submit" class="btn btn-secondary btn-sm px-1 status_change" title="prev stage"> < </button>
+    </form>
+</div>

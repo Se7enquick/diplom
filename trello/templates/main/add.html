@@ -1,0 +1,69 @@
+{% extends 'base.html'%}
+{% comment %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+body{
+  margin: 0 auto;
+  text-align:center;
+  width: 450px;
+}
+</style>
+<div class="form-group">
+<form method = 'POST'>
+
+{% load crispy_forms_tags %}
+    {% csrf_token %}
+    {{ form|crispy  }}
+
+            <div class="input-group mb-3 col-5 px-0">
+                {% if not user.is_superuser %}
+                <div class="input-group-prepend">
+                    <div class="input-group-text" title="I will do">
+                        <input type="checkbox"
+                               name="performer"
+                               id="id_performer"
+                               aria-label="Checkbox for following text input">
+                    </div>
+                </div>
+                {% endif %}    
+<button type = 'submit' class='btn btn-primary'>Готово</button>
+</form>
+</div>
+{% endblock %}
+
+{% endcomment %}
+
+
+{#    new task #}
+{% block content %}
+
+        <form method="post" action="{% url 'main:create' %}">
+            {% csrf_token %}
+            <div class="input-group mb-3 col-5 px-0">
+                {% if not user.is_superuser %}
+                <div class="input-group-prepend">
+                    <div class="input-group-text" title="I will do">
+                        <input type="checkbox"
+                               name="user"
+                               id="id_user"
+                               aria-label="Checkbox for following text input">
+                    </div>
+                </div>
+                {% endif %}
+                <input type="text"
+                       class="performers"
+                       required
+                       placeholder="Type new task title"
+                       name="article"
+                       title="Task title"
+                       maxlength="50"
+                       id="id_article"
+                       aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">New</button>
+                </div>
+            </div>
+        </form>
+{#    end new task #}
+{% endblock content %}

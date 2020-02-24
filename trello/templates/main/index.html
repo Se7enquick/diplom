@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<style> .card{
+    width:250px;
+    margin: 5px;
+    padding: 5px;   
+}</style>
+
+        <div class="row ml-4">
+            {% for status in status_list %}
+                <div class="card bg-dark m-2">
+                    <p class="badge badge-info">{{ status.name }}</p>
+
+                    {% include 'task_main/task_block.html' %}
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endblock %}

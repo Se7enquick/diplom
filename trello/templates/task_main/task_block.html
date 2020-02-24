@@ -1,0 +1,131 @@
+<!-- НЕ ЛЕЗЬ СЮДА ОНО ТЕБЯ СОЖРЕТ Я САМ ДО КОНЦА НЕ ПОНЯЛ КАК ЭТО РАБОТАЕТ -->
+<style>
+    .card{
+        margin-left: -3px;
+        padding: 1px;
+    }</style>
+{% for task in tasks %}
+    {% if task.status.pk == status.pk %}
+        <div class="card bg-info my-1 mb-1 pb-3">
+            <div class="col px-0 mx-0">
+
+                {% if user.pk == task.creator.pk or user.is_superuser %}
+                    <div>
+                        <form action="{% url 'main:update_article' task.pk %}" method="post">
+                            {% csrf_token %}
+
+                            <div class="input-group  mb-1">
+                                {% include 'task_main/task_primarykey.html' %}
+                                {% include 'task_main/task_art_input.html' %}
+
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="submit">Изменить</button>
+                                </div>
+                                {% if user.is_superuser %}
+                                    <button type="submit" form="task_{{ task.pk }}_delete"
+                                            class="btn btn-danger">Удалить
+                                    </button>
+                                {% endif %}
+                            </div>
+                        </form>
+
+                        {% if user.is_superuser %}
+                            {% include 'task_main/del_task.html' %}
+                        {% endif %}
+                    </div>
+
+
+                {% else %}
+
+                    <div class="input-group input-group-sm mb-1">
+
+                        {% include 'task_main/task_primarykey.html' %}
+                        {% include 'task_main/task_art_input.html' %}
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            <div class="row mx-0 px-0">
+                {% if task.performer.pk == user.pk and status in status_list|slice:"1:4" %}
+                    {% include 'task_main/left.html' %}
+                {% elif user.is_superuser and status in status_list|slice:"4:" %}
+                    {% include 'task_main/left.html' %}
+                {% endif %}
+
+                <div class="col ml-0 mr-0 px-0">
+                    {% if  user.is_superuser %}
+                        <form action="{% url 'main:update_performer' task.pk %}" method="post">
+                            {% csrf_token %}
+                            <div class="input-group input-group-sm mb-1">
+                                <div class="input-group-prepend">
+                                    <p>
+                                        Исполнитель:
+                                    </p>
+                                </div>
+
+                                <select class="custom-select" name="performer" required id="inputGroupSelect04">
+                                    <option disabled selected></option>
+                                    {% for performer in performer_list %}
+                                        <option {% if task.performer.pk == performer.pk %} selected
+                                                {% endif %}
+                                                value="{{ performer.pk }}">{{ performer.username }}</option>
+                                    {% endfor %}
+                                </select>
+
+
+                                <div class="input-group-append">
+                                    <button class="btn btn-success" type="submit">OK</button>
+                                </div>
+                            </div>
+                        </form>
+                    {% else %}
+                        <div class="input-group input-group-sm">
+
+                            <div class="input-group-prepend">
+                                <p>
+                                    Исполнитель
+                                </p>
+                            </div>
+                            <input class="form-control"
+                                   type="text"
+                                   value="{{ task.performer }}"
+                                   disabled
+>
+                        </div>
+                    {% endif %}
+                    <div class="input-group input-group-sm mb-1">
+
+                        <div class="input-group-prepend">
+                            <p>
+                                Автор: 
+                            </p>
+                        </div>
+
+                        <input class="form-control"
+                               type="text"
+                               value="{{ task.creator }}"
+                               disabled
+                        >
+
+                    </div>
+                
+                </div>
+
+                
+                {% if task.performer.pk == user.pk and status in status_list|slice:":3" %}
+                    {% include 'task_main/right.html' %}
+                {% elif user.is_superuser and status in status_list|slice:"3:4" %}
+                    {% include 'task_main/right.html' %}
+                {% endif %}
+            
+
+            </div>
+        </div>
+    {% endif %}
+
+
+
+{% endfor task %}

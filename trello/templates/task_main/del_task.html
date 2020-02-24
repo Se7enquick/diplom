@@ -1,0 +1,5 @@
+<div title="Delete task">
+    <form action="{% url 'main:delete' task.pk %}" method="post" id="task_{{ task.pk }}_delete">
+        {% csrf_token %}
+    </form>
+</div>
