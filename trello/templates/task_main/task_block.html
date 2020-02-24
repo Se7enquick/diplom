@@ -9,13 +9,13 @@
         <div class="card bg-info my-1 mb-1 pb-3">
             <div class="col px-0 mx-0">
 
-                {% if user.pk == task.creator.pk or user.is_superuser %}
+                {% if user.is_superuser or user.pk == task.creator.pk %}
                     <div>
                         <form action="{% url 'main:update_article' task.pk %}" method="post">
                             {% csrf_token %}
 
                             <div class="input-group input-group-sm mb-1">
-                                {% include 'task_main/task_primarykey.html' %}
+                                {% include 'task_main/task_pk.html' %}
                                 {% include 'task_main/task_art_input.html' %}
 
                                 <div class="input-group-append">
@@ -39,7 +39,7 @@
 
                     <div class="input-group input-group-sm mb-1">
 
-                        {% include 'task_main/task_primarykey.html' %}
+                        {% include 'task_main/task_pk.html' %}
                         {% include 'task_main/task_art_input.html' %}
 
                     </div>
@@ -69,9 +69,10 @@
                                 <select class="custom-select" name="performer" required id="inputGroupSelect04">
                                     <option disabled selected></option>
                                     {% for performer in performer_list %}
-                                        <option {% if task.performer.pk == user.pk %} selected
-                                                {% endif %}
-                                                value="{{ task.performer.pk }}">{{ task.performer.username }}</option>
+                                        <option {% if task.performer.pk == performer.pk %} 
+                                        selected
+                                        {% endif %}
+                                                value="{{ performer.pk }}">{{ performer.username }}</option>
                                     {% endfor %}
                                 </select>
 
@@ -107,8 +108,7 @@
                         <input class="form-control"
                                type="text"
                                value="{{ task.creator }}"
-                               disabled
-                        >
+                               disabled>
 
                     </div>
                 

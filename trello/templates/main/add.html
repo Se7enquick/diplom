@@ -4,13 +4,13 @@
 
         <form method="post" action="{% url 'main:create' %}">
             {% csrf_token %}
-            <div class="input-group mb-3 col-5 px-0">
+            <div class="input-group mb-5 col-5 px-0">
                 {% if not user.is_superuser %}
                 <div class="input-group-prepend">
                     <div class="input-group-text" title="Я - исполнитель">
                         <input type="checkbox"
-                               name="user"
-                               id="id_user"
+                               name="performer"
+                               id="id_performer"
                                aria-label="">
                     </div>
                 </div>

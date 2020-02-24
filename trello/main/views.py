@@ -18,11 +18,11 @@ class TaskView(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(object_list = None, **kwargs)
-        performers_list = User.objects.exclude(id=1).filter(is_staff=False)
+        performer_list = User.objects.exclude(id=1).filter(is_staff=False)
         self.session_expired()
         context.update({'delete': DeleteTask,
                         'create': AddTaskForm,
-                        'performers_list': performers_list,
+                        'performer_list': performer_list,
                         'status_list': Status.objects.all(), 
                         })
         return context
@@ -39,7 +39,7 @@ class CreateTask(CreateView):
         form_create.user_id = self.request.user.id
         if form.cleaned_data['performer']:
             form_create.performer = self.request.user
-            form_create.performer = self.request.user.id
+            form_create.performer_id = self.request.user.id
         return super().form_valid(form)
 
     def form_invalid(self, form):

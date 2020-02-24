@@ -3,10 +3,10 @@
        required
        title="Текст"
        aria-describedby="basic-addon2"
-       name="title"
-       id="title_{{ task.pk }}"
+       name="article"
+       id="article_{{ task.pk }}"
        value="{{ task.article }}"
-        {% if not user.is_superuser and user.pk != task.owner.pk %}
+        {% if not user.is_superuser and user.pk != task.creator.pk %}
             disabled
         {% endif %}
 >
