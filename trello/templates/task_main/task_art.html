@@ -4,13 +4,13 @@
             {% csrf_token %}
             <div class="input-group input-group-sm mb-1">
                 <input type="text" class="form-control" required
-                       title="Task title"
+                       title="Текст"
                        aria-describedby="basic-addon2"
                        name="title"
                        id="title_{{ task.pk }}"
                        value="{{ task.article }}">
                 <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit">ok</button>
+                    <button class="btn btn-outline-secondary" type="submit">OK</button>
                 </div>
             </div>
         </form>

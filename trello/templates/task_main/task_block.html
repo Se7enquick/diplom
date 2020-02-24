@@ -14,7 +14,7 @@
                         <form action="{% url 'main:update_article' task.pk %}" method="post">
                             {% csrf_token %}
 
-                            <div class="input-group  mb-1">
+                            <div class="input-group input-group-sm mb-1">
                                 {% include 'task_main/task_primarykey.html' %}
                                 {% include 'task_main/task_art_input.html' %}
 
@@ -57,7 +57,7 @@
 
                 <div class="col ml-0 mr-0 px-0">
                     {% if  user.is_superuser %}
-                        <form action="{% url 'main:update_performer' task.pk %}" method="post">
+                        <form action="{% url 'main:upd_performer' task.pk %}" method="post">
                             {% csrf_token %}
                             <div class="input-group input-group-sm mb-1">
                                 <div class="input-group-prepend">
@@ -69,9 +69,9 @@
                                 <select class="custom-select" name="performer" required id="inputGroupSelect04">
                                     <option disabled selected></option>
                                     {% for performer in performer_list %}
-                                        <option {% if task.performer.pk == performer.pk %} selected
+                                        <option {% if task.performer.pk == user.pk %} selected
                                                 {% endif %}
-                                                value="{{ performer.pk }}">{{ performer.username }}</option>
+                                                value="{{ task.performer.pk }}">{{ task.performer.username }}</option>
                                     {% endfor %}
                                 </select>
 
